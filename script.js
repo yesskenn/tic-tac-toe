@@ -69,57 +69,83 @@ function cell(){
         getValue,
     };
     }
-  
+
+
 
 
 
 function gameController(
     playerXname = "PlayerX",
     playerOname = "PlayerO"
-){
+    ){
 
-    const board = gameBoard();
+        const board = gameBoard();
+        const players = [
+            {
+                name: playerXname,
+                token: "X",
+            },
+            {
+                name: playerOname,
+                token: "O",
+            },
+        ]
+        const winningCombos = (spot) => {[
+                //this is an array of spots //how do i map each spot to these combos?
+                [spot[1], spot[4], spot[7]],
+                [spot[2], spot[5], spot[8]],
+                [spot[3], spot[6], spot[9]],
+                [spot[1], spot[2], spot[3]],
+                [spot[4], spot[5], spot[6]],
+                [spot[7], spot[8], spot[9]],
+                [spot[1], spot[5], spot[9]],
+                [spot[3], spot[5], spot[7]]
+                /*
+                [1,4,7],
+                [2,5,8],
+                [3,6,9],
+                [1,2,3],
+                [4,5,6],
+                [7,8,9],
+                [1,5,9],
+                [3,5,7]
+                */
+        ]}
 
-    const players = [
-        {
-            name: playerXname,
-            token: "X",
-        },
-        {
-            name: playerOname,
-            token: "O",
-        },
-    ]
+        //take turns between players X and O
+        let activePlayer = players[0];
+
+        const switchPlayerTurn = () => {
+            activePlayer = activePlayer === players[0] ? players[1] : players[0];
+        };
+        const getActivePlayer = () => activePlayer;
+        
+
+        const printNewRound = () => {
+            board.printBoard();
+            console.log(`${getActivePlayer().name}'s turn`)
+        };
+        const checkWinner = (spot) => {
+
+        };
+        const playTurn = (spot) => {
+            console.log( `{getActivePlayer().name}'s token into spot ${spot}`)
+            board.dropSpot(spot, getActivePlayer().token);
+            board.checkWinner(spot, getActivePlayer());
+            
+            switchPlayerTurn();
+            printNewRound();
+        }
     
-    //take turns between players X and O
-    let activePlayer = players[0];
-
-    const switchPlayerTurn = () => {
-        activePlayer = activePlayer === players[0] ? players[1] : players[0];
-    };
-    const getActivePlayer = () => activePlayer;
-
-    const printNewRound = () => {
-        board.printBoard();
-        console.log(`${getActivePlayer().name}'s turn`)
-    };
-
-    const playTurn = (spot) => {
-        console.log( `{getActivePlayer().name}'s token into spot ${spot}`)
-        board.dropSpot(spot, getActivePlayer().token);
-
-        switchPlayerTurn();
-        printNewRound();
-    }
-
-    printNewRound();
 
     return {
         playTurn,
+        checkWinner,
+        winningCombos,
         getActivePlayer,
     };
-}
 
+    }
 const game = gameController();
 
 
