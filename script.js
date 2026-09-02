@@ -90,27 +90,7 @@ function gameController(
                 token: "O",
             },
         ]
-        const winningCombos = (spot) => {[
-                //this is an array of spots //how do i map each spot to these combos?
-                [spot[1], spot[4], spot[7]],
-                [spot[2], spot[5], spot[8]],
-                [spot[3], spot[6], spot[9]],
-                [spot[1], spot[2], spot[3]],
-                [spot[4], spot[5], spot[6]],
-                [spot[7], spot[8], spot[9]],
-                [spot[1], spot[5], spot[9]],
-                [spot[3], spot[5], spot[7]]
-                /*
-                [1,4,7],
-                [2,5,8],
-                [3,6,9],
-                [1,2,3],
-                [4,5,6],
-                [7,8,9],
-                [1,5,9],
-                [3,5,7]
-                */
-        ]}
+       
 
         //take turns between players X and O
         let activePlayer = players[0];
@@ -125,23 +105,53 @@ function gameController(
             board.printBoard();
             console.log(`${getActivePlayer().name}'s turn`)
         };
-        const checkWinner = (spot) => {
+        const checkWinner = () => {
+            const winConditions = [
+                [1,4,7],
+                [2,5,8],
+                [3,6,9],
+                [1,2,3],
+                [4,5,6],
+                [7,8,9],
+                [1,5,9],
+                [3,5,7]
+            ]
+            // check if the tokens are in any of the spots, if any of the winning combinations are there
 
-        };
+            //are any of the winning conditions present?
+            const isMatch =  winConditions.some(combination =>
+                //is every spot in one of the winning conditions present?
+                combination.every(spot => {
+                    const targetCell = board.currentSpots[spot];
+
+                    // is this cell the current player's token?
+                    return targetCell.getValue() === getActivePlayer().token;
+                })
+            );
+        
+                //if activePlayer has spots in any of the winConditions, declare winner
+            if (isMatch){
+                console.log(`the winner is ${getActivePlayer().name}!!!!`);
+            }
+            }; //game.playTurn(
+            checkWinner();
+      
+    
         const playTurn = (spot) => {
-            console.log( `{getActivePlayer().name}'s token into spot ${spot}`)
+            console.log( `${getActivePlayer().name}'s token into spot ${spot}`)
             board.dropSpot(spot, getActivePlayer().token);
-            board.checkWinner(spot, getActivePlayer());
             
-            switchPlayerTurn();
+            checkWinner();
+
+            
+           
             printNewRound();
+            switchPlayerTurn();
         }
     
 
     return {
         playTurn,
-        checkWinner,
-        winningCombos,
         getActivePlayer,
     };
 
