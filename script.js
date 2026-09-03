@@ -168,3 +168,16 @@ const game = gameController();
             // if winner, then declare winner
             // else continue
     // and switch active player
+
+
+function renderBoard(){
+    let body = document.querySelector('body');
+    let squareBoard = document.createElement('div');
+    document.body.appendChild(squareBoard);
+            squareBoard.style.setProperty('border', '10px solid #4a5a72') //previous pink #F9AED1
+            squareBoard.classList.add('squareBoard');
+
+
+
+}
+renderBoard();
