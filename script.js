@@ -1,3 +1,8 @@
+let grid = document.querySelector("#board");
+let square = document.createElement('div');
+
+
+
 function gameBoard(){
     const board = []
     const rows = 3;
@@ -7,10 +12,13 @@ function gameBoard(){
    //drawing the mf'ing board
 
     for (let i = 0; i < rows; i++){
+
         board[i] = [];
         for (let j=0; j < columns; j++){
         board[i].push(cell());
+        addGrid(grid, 1);
         }
+        
     }   
 
     //inspo /help from the connect4 guy
@@ -20,7 +28,9 @@ function gameBoard(){
     const printBoard = () => {
         const boardWithCellValues = board.map((row) =>
       row.map((cell) => cell.getValue())
+        
     );
+
     console.table(boardWithCellValues);
   };
 
@@ -171,13 +181,37 @@ const game = gameController();
 
 
 function renderBoard(){
-    let body = document.querySelector('body');
-    let squareBoard = document.createElement('div');
-    document.body.appendChild(squareBoard);
-            squareBoard.style.setProperty('border', '10px solid #4a5a72') //previous pink #F9AED1
-            squareBoard.classList.add('squareBoard');
-
+ 
+//for every cell, add a button or cell in the dom (html)
+// then add event listener to each cell 
+// then connect each click to when the cell value changes to an X or O 
 
 
 }
 renderBoard();
+
+    square.className = "square";
+    grid.appendChild(square);
+    grid.style.setProperty('border', '1px solid #4a5a72') //previous pink #F9AED1
+
+  function addGrid(element, squares){
+    element.style.setProperty('background-color', '#f5f5f5')
+    for (let i=0; i < squares*squares; i++){
+
+        square.style.setProperty('border', '2px solid #4a5a72')
+        square.style.setProperty('width',`calc(100%/${squares})`)
+        square.style.setProperty('height',`calc(100%/${squares})`)
+        square.style.setProperty('box-sizing', 'border-box')
+        square.style.setProperty('aspect-ratio','1/1')
+        square.style.setProperty('flex','1 1 1');
+
+       // square.style.setProperty('border-right', '1px solid #ffffff')
+       // square.style.setProperty('border-top', '1px solid #4a5a72')  
+       // square.style.setProperty('border-bottom', '1px solid #ffffff')  
+        square.addEventListener('mouseover', () => {
+           
+      }) 
+    }};
+
+let test = addGrid(grid, 3);
+board.appendChild(square);
