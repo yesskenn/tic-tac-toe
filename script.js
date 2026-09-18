@@ -1,5 +1,4 @@
-let grid = document.querySelector("#board");
-let square = document.createElement('div');
+let grid = document.querySelector("#container");
 
 
 
@@ -16,7 +15,9 @@ function gameBoard(){
         board[i] = [];
         for (let j=0; j < columns; j++){
         board[i].push(cell());
-        addGrid(grid, 1);
+        
+         
+        
         }
         
     }   
@@ -149,12 +150,12 @@ function gameController(
     
         const playTurn = (spot) => {
             console.log( `${getActivePlayer().name}'s token into spot ${spot}`)
+            addPlayerToken(getActivePlayer().token)
             board.dropSpot(spot, getActivePlayer().token);
             
-            checkWinner();
 
-            
-           
+
+            checkWinner();
             printNewRound();
             switchPlayerTurn();
         }
@@ -190,15 +191,32 @@ function renderBoard(){
 }
 renderBoard();
 
-    square.className = "square";
-    grid.appendChild(square);
-    grid.style.setProperty('border', '1px solid #4a5a72') //previous pink #F9AED1
+   // square.className = "square";
+   // grid.appendChild(square);
+   // grid.style.setProperty('border', '1px solid #f2f2f2') //previous pink #F9AED1
+
+const container = document.getElementById('container');
+const canvas = document.getElementById('board');
+canvas.style.setProperty('margin', '0 auto');
+canvas.style.setProperty('padding', '1%');
+canvas.style.setProperty('display', 'flex');
+canvas.style.setProperty('flex-wrap','wrap');
+canvas.style.setProperty('flex-direction','row');
+canvas.style.setProperty('justify-content','space-between')
+canvas.style.setProperty('width', '666px');
+
 
   function addGrid(element, squares){
-    element.style.setProperty('background-color', '#f5f5f5')
+    element.style.setProperty('background-color', '#313233')
     for (let i=0; i < squares*squares; i++){
+        let square = document.createElement('div');
+            let playBtn = document.createElement('button');
+            playBtn.className = "playerBtn";
+            let playerSquare = document.createElement('div');
+            playerSquare.className = "playerSquare";
 
-        square.style.setProperty('border', '2px solid #4a5a72')
+
+        square.style.setProperty('border', '1px solid #f2f2f2')
         square.style.setProperty('width',`calc(100%/${squares})`)
         square.style.setProperty('height',`calc(100%/${squares})`)
         square.style.setProperty('box-sizing', 'border-box')
@@ -209,9 +227,39 @@ renderBoard();
        // square.style.setProperty('border-top', '1px solid #4a5a72')  
        // square.style.setProperty('border-bottom', '1px solid #ffffff')  
         square.addEventListener('mouseover', () => {
-           
-      }) 
-    }};
+           const rndCol = `rgb(${random(120)+80} ${random(115)} ${random(120)+80})`;
+            square.style.backgroundColor = rndCol;   
 
-let test = addGrid(grid, 3);
-board.appendChild(square);
+            
+      });
+
+      square.addEventListener('click', () => {
+                square.appendChild(playerSquare);
+                game().playTurn;
+                playerSquare.textContent = `${getActivePlayer().token}`;
+
+
+       // square.appendChild(getActivePlayer().token);
+      })
+      canvas.appendChild(square);
+    }
+    }
+
+addGrid(canvas, 3);
+//board.appendChild(square);
+//addGrid(board,3);
+
+
+function random(number) {
+  return Math.floor(Math.random() * (number + 1));
+}
+
+    let start = document.querySelector('#start');
+    let winner= document.querySelector('#winner');
+   
+    start.addEventListener('click', (e) => {
+       winner.textContent = "HELLOOOOOO"; 
+       start.textContent = "REMATCH";
+       game();
+    });
+
