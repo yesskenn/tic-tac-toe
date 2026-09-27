@@ -13,10 +13,24 @@
         <div id="game-console">
             <button id="start">START</button>
             <div id="winner"></div>
+            <h2 HI WARREN</h2>
+                <div id="stripes">
+                    <div class="blue-stripes"></div>
+                    <div class="white-stripes"></div>
+                    <div class="blue-stripes"></div>
+                    <div class="white-stripes"></div>
+                 <div class="blue-stripes"></div>
+                    <div class="white-stripes"></div>
+
+</div>
+                    
+
+
+                
         </div>
         <div id="container"></div>
+        <div id="turn"></div>
         <div id="board">
-        <div id="square"></div>
 
 </div>
      </main>   
@@ -25,4 +39,87 @@
 </body>
 <script src="script.js"></script>
 </html>
+<!--
+<script>
+        let currentPlayer = 'X';
+        let gameBoard = ['', '', '', '', '', '', '', '', ''];
+        let gameActive = true;
+        let moveHistory = [];
 
+        const cells = document.querySelectorAll('.cell');
+        const status = document.querySelector('.status');
+
+        const winningCombinations = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // Rows
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // Columns
+            [0, 4, 8], [2, 4, 6] // Diagonals
+        ];
+
+        // Initialize game
+        cells.forEach((cell, index) => {
+            cell.addEventListener('click', () => handleCellClick(index));
+        });
+
+        function handleCellClick(index) {
+            if (gameBoard[index] !== '' || !gameActive) return;
+
+            // Make move
+            gameBoard[index] = currentPlayer;
+            cells[index].textContent = currentPlayer;
+            cells[index].disabled = true;
+            
+            // Save move to history
+            moveHistory.push({index, player: currentPlayer});
+
+            // Check for win or draw
+            if (checkWinner()) {
+                status.textContent = `Player ${currentPlayer} Wins!`;
+                gameActive = false;
+                disableAllCells();
+            } else if (gameBoard.every(cell => cell !== '')) {
+                status.textContent = "It's a Draw!";
+                gameActive = false;
+            } else {
+                // Switch player
+                currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
+                status.textContent = `Player ${currentPlayer}'s Turn`;
+            }
+        }
+
+        function checkWinner() {
+            return winningCombinations.some(combination => {
+                const [a, b, c] = combination;
+                return gameBoard[a] && gameBoard[a] === gameBoard[b] && gameBoard[a] === gameBoard[c];
+            });
+        }
+
+        function disableAllCells() {
+            cells.forEach(cell => cell.disabled = true);
+        }
+
+        function resetGame() {
+            gameBoard = ['', '', '', '', '', '', '', '', ''];
+            currentPlayer = 'X';
+            gameActive = true;
+            moveHistory = [];
+            
+            cells.forEach(cell => {
+                cell.textContent = '';
+                cell.disabled = false;
+            });
+            
+            status.textContent = "Player X's Turn";
+        }
+
+        function undoMove() {
+            if (moveHistory.length === 0 || !gameActive) return;
+            
+            const lastMove = moveHistory.pop();
+            gameBoard[lastMove.index] = '';
+            cells[lastMove.index].textContent = '';
+            cells[lastMove.index].disabled = false;
+            
+            currentPlayer = lastMove.player;
+            status.textContent = `Player ${currentPlayer}'s Turn`;
+        }
+    </script> -->

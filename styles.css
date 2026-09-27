@@ -68,3 +68,60 @@ header {
     font-size: 33px;
     color: white;
 }
+
+#turn { 
+    font-size: 44px;
+    color: white;
+    font-weight: bold;
+}
+
+@keyframes wavy{
+    from {background-color: rgb(47, 123, 151);}
+    to {background-color: rgb(255, 0, 204);}
+}
+
+
+@keyframes blue-animation{
+     0%   {background-color: rgb(47, 123, 151);}
+  25%  {background-color: white;}
+  50%  {background-color: rgb(47, 123, 151);}
+  100% {background-color: white;}
+
+}
+
+
+@keyframes white-animation{
+    0% {background-color: white; left: 0px; }
+    25%{background-color: rgb(47, 123, 151); left: 56px; }
+    50%{background-color: white; left: 100px;}
+    100%{background-color: rgb(47, 123, 151); left: 144px;};
+
+}
+#stripes {
+    display: none; 
+    flex-direction: row;
+    animation-name: wavy;
+    animation-duration: 10s;
+   
+}
+
+.blue-stripes {
+    background-color: rgb(47, 123, 151);
+    height: 300px;
+    width: 22px;
+    position: relative;
+    animation-name: blue-animation;
+    animation-duration: 10s;
+  animation-direction: alternate;
+
+}
+
+.white-stripes {
+    background-color: white;
+    height: 300px;
+    width: 22px;
+    position: relative;
+    animation-name: white-animation;
+    animation-duration: 10s;
+  animation-direction: alternate;
+}
