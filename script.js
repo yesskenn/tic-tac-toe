@@ -91,7 +91,7 @@ function gameController(
 
         //take turns between players X and O
         let activePlayer = players[0];
-
+        let gameWinner;
         const switchPlayerTurn = () => {
             activePlayer = activePlayer === players[0] ? players[1] : players[0];
         };
@@ -126,8 +126,11 @@ function gameController(
                 //if activePlayer has spots in any of the winConditions, declare winner
             if (isMatch){
                 console.log(`the winner is ${getActivePlayer().name}!!!!`);
+                gameWinner = activePlayer;
+                
             }
             }; //game.playTurn(
+
             checkWinner();
       
     
@@ -144,7 +147,8 @@ function gameController(
         playTurn,
         getActivePlayer,
         currentSpots: board.currentSpots,
-        getBoard: board.getBoard
+        getBoard: board.getBoard,
+        
     };
 
     }
@@ -203,16 +207,22 @@ addGrid(canvas, 3, game.currentSpots);
 
 function screenController(){
     const game = gameController();
-    const boardDiv = document.querySelector('#board');
-    const winner= document.querySelector('#winner');
     const playerTurnDiv = document.querySelector('#turn');
+    const winnerDiv = document.querySelector('#winner');
+    const boardDiv = document.querySelector('#board');
+
+   
+    //const winner= document.querySelector('#winner');
     
     const updateScreen = () => {
-        winner.textContent = "";
+        winnerDiv.textContent = "";
         const activePlayer = game.getActivePlayer();
-        		playerTurnDiv.textContent =  `${activePlayer.name}'s turn`;
- //activePlayer is the player object returned by the function - getActivePlayer()
-        square.textContent = `${activePlayer.token}`;
+        playerTurnDiv.textContent =  `${activePlayer.name}'s turn`; //activePlayer is the player object returned by the function - getActivePlayer()
+        //square.textContent = `${activePlayer.token}`;
+         if(game.winner){
+
+         winnerDiv.textContent = `the winner is ${activePlayer.name}!!`;
+    }
 
     }
 
@@ -222,6 +232,7 @@ function screenController(){
 
         game.playTurn(spot);
         e.target.textContent = game.currentSpots[spot].getValue();
+        updateScreen();
         }
         boardDiv.addEventListener("click", clickHandler);
         updateScreen();

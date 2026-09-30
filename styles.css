@@ -66,15 +66,23 @@ header {
 
 #winner {
     font-size: 33px;
-    color: white;
+    color: #fff;
+    text-align:center;
 }
 
 #turn { 
     font-size: 44px;
     color: white;
     font-weight: bold;
+    text-align: center;
 }
 
+.cell{
+    color: #fff;
+    font-size: 2em;
+    font-weight: bold;
+
+}
 @keyframes wavy{
     from {background-color: rgb(47, 123, 151);}
     to {background-color: rgb(255, 0, 204);}
