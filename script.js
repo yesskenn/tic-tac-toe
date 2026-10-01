@@ -91,7 +91,6 @@ function gameController(
 
         //take turns between players X and O
         let activePlayer = players[0];
-        let gameWinner;
         const switchPlayerTurn = () => {
             activePlayer = activePlayer === players[0] ? players[1] : players[0];
         };
@@ -125,9 +124,11 @@ function gameController(
             );
                 //if activePlayer has spots in any of the winConditions, declare winner
             if (isMatch){
-                console.log(`the winner is ${getActivePlayer().name}!!!!`);
-                gameWinner = activePlayer;
-                
+                //console.log(`the winner is ${getActivePlayer().name}!!!!`);
+                let winner = activePlayer;
+                const winnerDiv = document.querySelector('#winner');
+                winnerDiv.textContent = `the winner is ${getActivePlayer().name}!!`
+                gameOver();
             }
             }; //game.playTurn(
 
@@ -152,9 +153,20 @@ function gameController(
     };
 
     }
+
 const game = gameController();
 
-
+function gameOver(){
+    //write logic for when game is found
+    /* 
+    - hide the player turn div
+    - show player score (or maybe this goes elsewhere)
+    - add a plus one for the winner
+    - ask the player to start over or end the game
+    - start the game over if they chose to play again
+    - 
+    */
+}
 //write out your spot like "game.playTurn(1)"
     
     // pick a spot on the table, between 1 and 9
@@ -208,21 +220,16 @@ addGrid(canvas, 3, game.currentSpots);
 function screenController(){
     const game = gameController();
     const playerTurnDiv = document.querySelector('#turn');
-    const winnerDiv = document.querySelector('#winner');
     const boardDiv = document.querySelector('#board');
 
    
     //const winner= document.querySelector('#winner');
     
     const updateScreen = () => {
-        winnerDiv.textContent = "";
         const activePlayer = game.getActivePlayer();
         playerTurnDiv.textContent =  `${activePlayer.name}'s turn`; //activePlayer is the player object returned by the function - getActivePlayer()
         //square.textContent = `${activePlayer.token}`;
-         if(game.winner){
-
-         winnerDiv.textContent = `the winner is ${activePlayer.name}!!`;
-    }
+         
 
     }
 
