@@ -1,6 +1,5 @@
-let grid = document.querySelector("#container");
+let container = document.querySelector("#intro-container");
 const canvas = document.getElementById('board');
-
 canvas.style.setProperty('margin', '0 auto');
 canvas.style.setProperty('padding', '1%');
 canvas.style.setProperty('display', 'flex');
@@ -157,6 +156,20 @@ function gameController(
 const game = gameController();
 
 function gameOver(){
+     let xScore = 0;
+     let oScore = 0;
+     let round = 0;
+     let tie = "IT'S A TIE";
+    let startOver = document.createElement("button");
+    startOver.style.setProperty('display','none');
+    startOver.textContent = "start again?"
+    container.appendChild(startOver);
+     startOver.addEventListener('click', () => {
+
+            });
+
+
+    
     //write logic for when game is found
     /* 
     - hide the player turn div
@@ -167,6 +180,17 @@ function gameOver(){
     - 
     */
 }
+gameOver(); 
+
+const startBtn = document.querySelector('#start');
+    
+startBtn.addEventListener('click', () => {
+    addGrid(canvas, 3, game.currentSpots);
+    console.log("HELLOOOOSADFJKLSD")
+       
+    });
+
+
 //write out your spot like "game.playTurn(1)"
     
     // pick a spot on the table, between 1 and 9
@@ -214,7 +238,6 @@ function gameOver(){
     }
     }
 
-addGrid(canvas, 3, game.currentSpots);
 
 
 function screenController(){
@@ -223,7 +246,6 @@ function screenController(){
     const boardDiv = document.querySelector('#board');
 
    
-    //const winner= document.querySelector('#winner');
     
     const updateScreen = () => {
         const activePlayer = game.getActivePlayer();
@@ -251,14 +273,9 @@ function random(number) {
   return Math.floor(Math.random() * (number + 1));
 }
 
-const start = document.querySelector('#start');
 
 /*
-    start.addEventListener('click', (e) => {
-       winner.textContent = "HELLOOOOOO"; 
-       start.textContent = "REMATCH";
-       
-    });
+   
 
    
           square.addEventListener('click', () => {

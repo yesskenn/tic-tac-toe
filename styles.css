@@ -75,6 +75,10 @@ header {
     color: white;
     font-weight: bold;
     text-align: center;
+    display:none;
+}
+#container{
+    display:none;
 }
 
 .cell{
