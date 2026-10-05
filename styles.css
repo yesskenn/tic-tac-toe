@@ -70,12 +70,19 @@ header {
     text-align:center;
 }
 
-#turn { 
+#turn{ 
     font-size: 44px;
     color: white;
     font-weight: bold;
     text-align: center;
-    display:none;
+   
+}
+
+ #score { 
+    font-size: 44px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
 }
 #container{
     display:none;

@@ -8,6 +8,7 @@ canvas.style.setProperty('flex-direction','row');
 canvas.style.setProperty('justify-content','space-between')
 canvas.style.setProperty('width', '30vw');
 
+const winnerDiv = document.querySelector('#winner');
 
 function gameBoard(){
     const board = []
@@ -22,7 +23,7 @@ function gameBoard(){
             }
         };   
     const getBoard = () => board;     // inspo / help from the connect4 guy
-
+   
     const printBoard = () => {
         const boardWithCellValues = board.map((row) =>
             row.map((cell) => cell.getValue()));
@@ -50,7 +51,10 @@ function gameBoard(){
             const targetCell = currentSpots[spot];
                 targetCell.addToken(player);    //if the player chooses a spot number, add the player token to the spot on the board   
         }
-        return { getBoard, dropSpot, currentSpots, printBoard};
+         const resetBoard = () => {
+            board  = []
+        }
+        return { getBoard, resetBoard, dropSpot, currentSpots, printBoard};
 
 };
 
@@ -72,7 +76,7 @@ function cell(){
 
 function gameController(
     playerXname = "PlayerX",
-    playerOname = "PlayerO"
+    playerOname = "PlayerO",
     ){
 
         const board = gameBoard();
@@ -80,13 +84,20 @@ function gameController(
             {
                 name: playerXname,
                 token: "X",
+             
             },
             {
                 name: playerOname,
                 token: "O",
+            
             },
         ]
-       
+
+        let playerXscore = 0;
+        let playerOscore = 0;
+
+        const playerXscoreDiv = document.getElementById("playerXscore");
+        const playerOscoreDiv = document.getElementById("playerOscore");
 
         //take turns between players X and O
         let activePlayer = players[0];
@@ -111,7 +122,15 @@ function gameController(
                 [3,5,7]
             ]
             // check if the tokens are in any of the spots, if any of the winning combinations are there
+/* alternate way of checking if every index is in a row for a token
+ for (let pattern of patterns) {
+			if (pattern.every((index) => board[index] === currentPlayer.marker)) {
+				return true;
+			}
+		}
 
+		return false;
+        */
             //are any of the winning conditions present?
             const isMatch =  winConditions.some(combination =>
                 //is every spot in one of the winning conditions present?
@@ -123,14 +142,27 @@ function gameController(
             );
                 //if activePlayer has spots in any of the winConditions, declare winner
             if (isMatch){
-                //console.log(`the winner is ${getActivePlayer().name}!!!!`);
-                let winner = activePlayer;
-                const winnerDiv = document.querySelector('#winner');
-                winnerDiv.textContent = `the winner is ${getActivePlayer().name}!!`
-                gameOver();
-            }
-            }; //game.playTurn(
+                const winner = getActivePlayer().name;
 
+               
+                if(getActivePlayer === playerXname){
+                    winnerDiv.textContent = `the winner is ${getActivePlayer().name}!!`
+                     playerXscore++;
+                        playerXscoreDiv.textContent = `${playerXscore}`;
+                        //playagain?
+                    return "playerXwin";
+                } else {
+                    winnerDiv.textContent = `the winner is ${getActivePlayer().name}!!`
+                     playerOscore++;
+                        playerOscoreDiv.textContent = `${playerOscore}`;
+                        //playagain?
+                    return "playerOwin";
+                }
+               
+            }
+         
+            }; //game.playTurn(
+           
             checkWinner();
       
     
@@ -154,21 +186,20 @@ function gameController(
     }
 
 const game = gameController();
+ 
 
 function gameOver(){
-     let xScore = 0;
-     let oScore = 0;
-     let round = 0;
-     let tie = "IT'S A TIE";
-    let startOver = document.createElement("button");
+      let startOver = document.createElement("button");
     startOver.style.setProperty('display','none');
-    startOver.textContent = "start again?"
-    container.appendChild(startOver);
-     startOver.addEventListener('click', () => {
+      startOver.style.setProperty('display', 'inline');
+    startOver.textContent = "Start Again?"
+     //let tie = "IT'S A TIE";
+ 
+    startOver.addEventListener('click', () => {
+
+    console.log("start again? button")
 
             });
-
-
     
     //write logic for when game is found
     /* 
@@ -180,34 +211,23 @@ function gameOver(){
     - 
     */
 }
-gameOver(); 
+
+function updateScore(){
+      
+     let scoreDiv = document.querySelector("#score");
+     scoreDiv.textContent = "popop";
+
+}
 
 const startBtn = document.querySelector('#start');
     
 startBtn.addEventListener('click', () => {
     addGrid(canvas, 3, game.currentSpots);
-    console.log("HELLOOOOSADFJKLSD")
+  
+    startBtn.style.setProperty('display', 'none');
+      console.log("HELLOOOOSADFJKLSD")
        
     });
-
-
-//write out your spot like "game.playTurn(1)"
-    
-    // pick a spot on the table, between 1 and 9
-    // replace that spot with X or O depending on active player
-    // refresh the table // check for winner
-            // check winning combinations for X and winning combinations for O 
-            // if winner, then declare winner
-            // else continue
-    // and switch active player
- 
-//for every cell, add a button or cell in the dom (html)
-// then add event listener to each cell 
-// then connect each click to when the cell value changes to an X or O 
-
-   // square.className = "square";
-   // grid.appendChild(square);
-   // grid.style.setProperty('border', '1px solid #f2f2f2') //previous pink #F9AED1
 
 
 
@@ -244,14 +264,30 @@ function screenController(){
     const game = gameController();
     const playerTurnDiv = document.querySelector('#turn');
     const boardDiv = document.querySelector('#board');
-
-   
+  
     
     const updateScreen = () => {
         const activePlayer = game.getActivePlayer();
-        playerTurnDiv.textContent =  `${activePlayer.name}'s turn`; //activePlayer is the player object returned by the function - getActivePlayer()
-        //square.textContent = `${activePlayer.token}`;
-         
+        playerTurnDiv.textContent =  `${activePlayer.name}'s turn`; //activePlayer is the player object 
+    }
+
+    const updateScores = () => {
+        player1Score.textContent = gameBoard.activePlayer()[0].getPlayerScore();
+		player2Score.textContent = gameBoard.activePlayer()[1].getPlayerScore();
+    };
+
+    const resetScores = () => {
+		playerOscore.textContent = 0;
+		playerXScore.textContent = 0;
+		tieScore.textContent = 0;
+	};
+
+    const resetBoard = () => {
+        boardCell.forEach((cell) => {
+            cell.textContent = "";
+        });
+    };
+    const announceWinner = () => {
 
     }
 
@@ -265,8 +301,9 @@ function screenController(){
         }
         boardDiv.addEventListener("click", clickHandler);
         updateScreen();
-
-    };
+return { resetBoard, updateScreen, updateScores, announceWinner, resetScores
+    }
+};
     screenController();
 
 function random(number) {
@@ -276,7 +313,6 @@ function random(number) {
 
 /*
    
-
    
           square.addEventListener('click', () => {
             square.appendChild(playerBtn);
