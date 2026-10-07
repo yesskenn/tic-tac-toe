@@ -7,8 +7,13 @@ canvas.style.setProperty('flex-wrap','wrap');
 canvas.style.setProperty('flex-direction','row');
 canvas.style.setProperty('justify-content','space-between')
 canvas.style.setProperty('width', '30vw');
-
+const boardDiv = document.querySelector('#board');
 const winnerDiv = document.querySelector('#winner');
+const playerTurnDiv = document.querySelector('#turn');
+
+    playerTurnDiv.style.setProperty('display','none');
+const playerXdiv = document.querySelector("#playerXscore");
+const playerOdiv = document.querySelector("#playerOscore");
 
 function gameBoard(){
     const board = []
@@ -93,11 +98,10 @@ function gameController(
             },
         ]
 
-        let playerXscore = 0;
-        let playerOscore = 0;
+        let xScore = 0;
+        let oScore = 0;
 
-        const playerXscoreDiv = document.getElementById("playerXscore");
-        const playerOscoreDiv = document.getElementById("playerOscore");
+  
 
         //take turns between players X and O
         let activePlayer = players[0];
@@ -143,20 +147,17 @@ function gameController(
                 //if activePlayer has spots in any of the winConditions, declare winner
             if (isMatch){
                 const winner = getActivePlayer().name;
+                winnerDiv.textContent = `the winner is ${winner}!!`
 
                
-                if(getActivePlayer === playerXname){
-                    winnerDiv.textContent = `the winner is ${getActivePlayer().name}!!`
-                     playerXscore++;
-                        playerXscoreDiv.textContent = `${playerXscore}`;
+                if(getActivePlayer().name === playerXname){
+                     xScore++;
+                        playerXdiv.textContent = `X: ${xScore} | `;
                         //playagain?
-                    return "playerXwin";
-                } else {
-                    winnerDiv.textContent = `the winner is ${getActivePlayer().name}!!`
-                     playerOscore++;
-                        playerOscoreDiv.textContent = `${playerOscore}`;
+                } else if(getActivePlayer().name === playerOname){
+                     oScore++;
+                    playerOdiv.textContent = `O: ${oScore++}`;
                         //playagain?
-                    return "playerOwin";
                 }
                
             }
@@ -223,6 +224,7 @@ const startBtn = document.querySelector('#start');
     
 startBtn.addEventListener('click', () => {
     addGrid(canvas, 3, game.currentSpots);
+    playerTurnDiv.style.setProperty('display','block');
   
     startBtn.style.setProperty('display', 'none');
       console.log("HELLOOOOSADFJKLSD")
@@ -262,8 +264,6 @@ startBtn.addEventListener('click', () => {
 
 function screenController(){
     const game = gameController();
-    const playerTurnDiv = document.querySelector('#turn');
-    const boardDiv = document.querySelector('#board');
   
     
     const updateScreen = () => {
@@ -272,8 +272,8 @@ function screenController(){
     }
 
     const updateScores = () => {
-        player1Score.textContent = gameBoard.activePlayer()[0].getPlayerScore();
-		player2Score.textContent = gameBoard.activePlayer()[1].getPlayerScore();
+       // player1Score.textContent = gameBoard.activePlayer()[0].getPlayerScore();
+		//player2Score.textContent = gameBoard.activePlayer()[1].getPlayerScore();
     };
 
     const resetScores = () => {
