@@ -14,6 +14,8 @@ const playerTurnDiv = document.querySelector('#turn');
     playerTurnDiv.style.setProperty('display','none');
 const playerXdiv = document.querySelector("#playerXscore");
 const playerOdiv = document.querySelector("#playerOscore");
+ 
+
 
 function gameBoard(){
     const board = []
@@ -151,12 +153,11 @@ function gameController(
 
                
                 if(getActivePlayer().name === playerXname){
-                     xScore++;
-                        playerXdiv.textContent = `X: ${xScore} | `;
-                        //playagain?
+                    xScore++;
+                    playerXdiv.textContent = `X: ${xScore}`;
                 } else if(getActivePlayer().name === playerOname){
                      oScore++;
-                    playerOdiv.textContent = `O: ${oScore++}`;
+                    playerOdiv.textContent = `O: ${oScore}`;
                         //playagain?
                 }
                
@@ -192,7 +193,7 @@ const game = gameController();
 function gameOver(){
       let startOver = document.createElement("button");
     startOver.style.setProperty('display','none');
-      startOver.style.setProperty('display', 'inline');
+    startOver.style.setProperty('display', 'inline');
     startOver.textContent = "Start Again?"
      //let tie = "IT'S A TIE";
  
@@ -225,6 +226,8 @@ const startBtn = document.querySelector('#start');
 startBtn.addEventListener('click', () => {
     addGrid(canvas, 3, game.currentSpots);
     playerTurnDiv.style.setProperty('display','block');
+    playerXdiv.textContent = `X: `;
+    playerOdiv.textContent = `O: `;
   
     startBtn.style.setProperty('display', 'none');
       console.log("HELLOOOOSADFJKLSD")
