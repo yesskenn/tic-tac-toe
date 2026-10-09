@@ -15,7 +15,7 @@ const playerTurnDiv = document.querySelector('#turn');
 const playerXdiv = document.querySelector("#playerXscore");
 const playerOdiv = document.querySelector("#playerOscore");
  
-
+const restartButton = document.querySelector("#restartBtn");
 
 function gameBoard(){
     const board = []
@@ -150,7 +150,6 @@ function gameController(
             if (isMatch){
                 const winner = getActivePlayer().name;
                 winnerDiv.textContent = `the winner is ${winner}!!`
-
                
                 if(getActivePlayer().name === playerXname){
                     xScore++;
@@ -166,7 +165,7 @@ function gameController(
             }; //game.playTurn(
            
             checkWinner();
-      
+ 
     
     const playTurn = (spot) => {
             console.log( `${getActivePlayer().name}'s token into spot ${spot}`)
@@ -190,19 +189,6 @@ function gameController(
 const game = gameController();
  
 
-function gameOver(){
-      let startOver = document.createElement("button");
-    startOver.style.setProperty('display','none');
-    startOver.style.setProperty('display', 'inline');
-    startOver.textContent = "Start Again?"
-     //let tie = "IT'S A TIE";
- 
-    startOver.addEventListener('click', () => {
-
-    console.log("start again? button")
-
-            });
-    
     //write logic for when game is found
     /* 
     - hide the player turn div
@@ -212,7 +198,6 @@ function gameOver(){
     - start the game over if they chose to play again
     - 
     */
-}
 
 function updateScore(){
       
@@ -284,12 +269,17 @@ function screenController(){
 		playerXScore.textContent = 0;
 		tieScore.textContent = 0;
 	};
-
+    
     const resetBoard = () => {
         boardCell.forEach((cell) => {
             cell.textContent = "";
         });
     };
+
+
+      restartButton.addEventListener('click', () => {
+        resetBoard();
+        }); 
     const announceWinner = () => {
 
     }
@@ -306,6 +296,7 @@ function screenController(){
         updateScreen();
 return { resetBoard, updateScreen, updateScores, announceWinner, resetScores
     }
+    
 };
     screenController();
 
@@ -322,3 +313,4 @@ function random(number) {
             playerBtn.textContent = `${getActivePlayer().token}`;
         });
         */
+     
