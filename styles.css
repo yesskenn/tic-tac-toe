@@ -14,6 +14,7 @@ body, h1, h2, h3, h4, h5, h6, p, ol, ul {
   margin: 0;
   padding: 0;
   font-weight: normal;
+  font-family: 'Helvetica', monospace;
 }
 
 ol, ul {
@@ -44,27 +45,44 @@ header {
     margin: 1em;
 }
 
-#game-console {
-    margin: 0 auto;
-    text-align:center;
+#console {
+    display:grid;
+    grid-template-columns: auto;
+    border: solid 23px limegreen;
+justify-content: center;  
+align-items:center;
+margin: 0 auto;  
     
 }
 
+#intro-container{
+    display:flex;
+    flex-direction: column;
+    margin: 0 auto;
+    border:solid 1px red;
+}
+#game-buttons{
+    display:flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
 button
  {
-    display: block;
-    padding: 0.75em 1.5em;
+    
+    padding: 0.75em;
     font-size: 20px;
     border: solid 1px #f2f2f2;
     border-radius: 0.5em;
-    margin: 0.25em auto;
+    margin: 0.25em 10pxw;
     background-color: #111111;
     color: #f2f2f2;
  }
 
-.playerBtn {
-    border: solid 2px red;
-}
+
+ #restartBtn {
+    display: none;
+ }
+
 
 #winner {
     font-size: 33px;
@@ -85,15 +103,25 @@ button
     color: white;
     font-weight: bold;
     text-align: center;
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    gap: 2em;
 }
 #container{
     display:none;
+}
+
+#board {
+    border-radius: 0.5em;
 }
 
 .cell{
     color: #fff;
     font-size: 2em;
     font-weight: bold;
+    border: solid 4px yellowgreen;
+    
 
 }
 @keyframes wavy{

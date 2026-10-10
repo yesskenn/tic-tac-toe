@@ -7,15 +7,17 @@ canvas.style.setProperty('flex-wrap','wrap');
 canvas.style.setProperty('flex-direction','row');
 canvas.style.setProperty('justify-content','space-between')
 canvas.style.setProperty('width', '30vw');
+canvas.style.setProperty('border', 'solid 3px red');
+
 const boardDiv = document.querySelector('#board');
 const winnerDiv = document.querySelector('#winner');
 const playerTurnDiv = document.querySelector('#turn');
-
     playerTurnDiv.style.setProperty('display','none');
 const playerXdiv = document.querySelector("#playerXscore");
 const playerOdiv = document.querySelector("#playerOscore");
- 
-const restartButton = document.querySelector("#restartBtn");
+const startBtn = document.querySelector('#start');
+
+const restartBtn = document.querySelector("#restartBtn");
 
 function gameBoard(){
     const board = []
@@ -52,16 +54,21 @@ function gameBoard(){
             }
         return spot;
         };
-
+     
         const currentSpots = spots();
         const dropSpot = (spot, player) => {
             const targetCell = currentSpots[spot];
                 targetCell.addToken(player);    //if the player chooses a spot number, add the player token to the spot on the board   
         }
-         const resetBoard = () => {
-            board  = []
-        }
-        return { getBoard, resetBoard, dropSpot, currentSpots, printBoard};
+          
+        const resetGameBoard = () => {
+            board.forEach(row => {
+                row.forEach(cell => {
+                    cell.reset();
+                });
+            });
+        } ;
+        return { resetGameBoard, getBoard, dropSpot, currentSpots, printBoard};
 
 };
 
@@ -73,10 +80,14 @@ function cell(){
         };
         //retrieves cell value through closure (from building a house from the inside out)
     const getValue = () => value;
+    const reset = () => {
+        value = 0;
+    }
 
     return {
         addToken,
         getValue,
+        reset
             };
     };
 
@@ -103,6 +114,7 @@ function gameController(
         let xScore = 0;
         let oScore = 0;
 
+            
   
 
         //take turns between players X and O
@@ -149,7 +161,9 @@ function gameController(
                 //if activePlayer has spots in any of the winConditions, declare winner
             if (isMatch){
                 const winner = getActivePlayer().name;
-                winnerDiv.textContent = `the winner is ${winner}!!`
+                winnerDiv.textContent = `The winner is ${winner}!`
+                restartBtn.style.setProperty('display','block');
+                
                
                 if(getActivePlayer().name === playerXname){
                     xScore++;
@@ -175,19 +189,28 @@ function gameController(
             printNewRound();
             switchPlayerTurn();
         }  
+ const resetDisplayBoard = () => {
+    const boardCell = document.querySelectorAll(".cell");
 
+    boardCell.forEach((cell) => {
+                cell.textContent = "";
+        });
+    };
     return {
         playTurn,
+        resetDisplayBoard,
         getActivePlayer,
         currentSpots: board.currentSpots,
         getBoard: board.getBoard,
+        resetGameBoard: board.resetGameBoard,
         
     };
 
     }
 
 const game = gameController();
- 
+const board = gameBoard();
+//console.log(game.resetBoard);
 
     //write logic for when game is found
     /* 
@@ -206,7 +229,6 @@ function updateScore(){
 
 }
 
-const startBtn = document.querySelector('#start');
     
 startBtn.addEventListener('click', () => {
     addGrid(canvas, 3, game.currentSpots);
@@ -218,8 +240,9 @@ startBtn.addEventListener('click', () => {
       console.log("HELLOOOOSADFJKLSD")
        
     });
+               
 
-
+ 
 
   function addGrid(element, squares, currentSpots){
     element.style.setProperty('background-color', '#313233')
@@ -229,7 +252,7 @@ startBtn.addEventListener('click', () => {
         const spot = i+1;
         square.dataset.spot = spot;
 
-        square.style.setProperty('border', '1px solid #f2f2f2')
+        square.style.setProperty('border', '2px solid #f2f2f2')
         square.style.setProperty('width',`calc(100%/${squares})`)
         square.style.setProperty('height',`calc(100%/${squares})`)
         square.style.setProperty('box-sizing', 'border-box')
@@ -248,12 +271,14 @@ startBtn.addEventListener('click', () => {
     }
     }
 
-
+   
+  
 
 function screenController(){
-    const game = gameController();
-  
-    
+   // const game = gameController();
+    // const board = gameBoard();
+     
+
     const updateScreen = () => {
         const activePlayer = game.getActivePlayer();
         playerTurnDiv.textContent =  `${activePlayer.name}'s turn`; //activePlayer is the player object 
@@ -270,20 +295,18 @@ function screenController(){
 		tieScore.textContent = 0;
 	};
     
-    const resetBoard = () => {
-        boardCell.forEach((cell) => {
-            cell.textContent = "";
-        });
-    };
 
-
-      restartButton.addEventListener('click', () => {
-        resetBoard();
-        }); 
     const announceWinner = () => {
 
     }
 
+    const resetDisplay = () => {
+        game.resetGameBoard();
+        game.resetDisplayBoard();
+        winnerDiv.textContent = "";
+        updateScreen();
+    };
+  
     function clickHandler(e){
         const spot = e.target.dataset.spot;
                 if (!e.target.classList.contains("cell")) return;
@@ -294,11 +317,17 @@ function screenController(){
         }
         boardDiv.addEventListener("click", clickHandler);
         updateScreen();
-return { resetBoard, updateScreen, updateScores, announceWinner, resetScores
+return { resetDisplay, updateScreen, updateScores, announceWinner, resetScores
     }
     
 };
-    screenController();
+    const screen = screenController();
+    restartBtn.addEventListener('click', () => {
+
+    screen.resetDisplay();
+  
+    
+ });
 
 function random(number) {
   return Math.floor(Math.random() * (number + 1));
