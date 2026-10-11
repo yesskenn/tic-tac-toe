@@ -214,12 +214,7 @@ const board = gameBoard();
     - 
     */
 
-function updateScore(){
-      
-     let scoreDiv = document.querySelector("#score");
-     scoreDiv.textContent = "popop";
 
-}
 
     
 startBtn.addEventListener('click', () => {
@@ -244,10 +239,10 @@ startBtn.addEventListener('click', () => {
         const spot = i+1;
         square.dataset.spot = spot;
 
-        square.style.setProperty('border', '2px solid #f2f2f2')
-        square.style.setProperty('width',`calc(100%/${squares})`)
-        square.style.setProperty('height',`calc(100%/${squares})`)
+        square.style.setProperty('width',`100%`)
+        square.style.setProperty('height',`auto`)
         square.style.setProperty('aspect-ratio','1/1')
+        square.style.setProperty('box-sizing', 'border-box');
 
        // square.style.setProperty('border-right', '1px solid #ffffff')
        // square.style.setProperty('border-top', '1px solid #4a5a72')  
