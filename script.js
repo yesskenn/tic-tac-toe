@@ -1,13 +1,5 @@
 let container = document.querySelector("#intro-container");
 const canvas = document.getElementById('board');
-canvas.style.setProperty('margin', '0 auto');
-canvas.style.setProperty('padding', '1%');
-canvas.style.setProperty('display', 'flex');
-canvas.style.setProperty('flex-wrap','wrap');
-canvas.style.setProperty('flex-direction','row');
-canvas.style.setProperty('justify-content','space-between')
-canvas.style.setProperty('width', '30vw');
-canvas.style.setProperty('border', 'solid 3px red');
 
 const boardDiv = document.querySelector('#board');
 const winnerDiv = document.querySelector('#winner');
@@ -163,7 +155,7 @@ function gameController(
                 const winner = getActivePlayer().name;
                 winnerDiv.textContent = `The winner is ${winner}!`
                 restartBtn.style.setProperty('display','block');
-                
+
                
                 if(getActivePlayer().name === playerXname){
                     xScore++;
@@ -255,9 +247,7 @@ startBtn.addEventListener('click', () => {
         square.style.setProperty('border', '2px solid #f2f2f2')
         square.style.setProperty('width',`calc(100%/${squares})`)
         square.style.setProperty('height',`calc(100%/${squares})`)
-        square.style.setProperty('box-sizing', 'border-box')
         square.style.setProperty('aspect-ratio','1/1')
-        square.style.setProperty('flex','1 1 1');
 
        // square.style.setProperty('border-right', '1px solid #ffffff')
        // square.style.setProperty('border-top', '1px solid #4a5a72')  
