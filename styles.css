@@ -51,7 +51,7 @@ header {
 #console {
     display:grid;
     grid-template-columns: 1fr;
-    grid-template-rows: auto-fit(4, 1fr);
+    grid-template-rows: auto-fit(3, 1fr);
     justify-items:center;
     margin: 0 auto;  
     gap:0.5em;
@@ -59,7 +59,7 @@ header {
     
     
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1400px) {
     #console {
         display:grid;
         grid-template-areas: 
@@ -70,7 +70,7 @@ header {
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: auto-fit(2,1fr);
         align-items:center;
-       
+       width: 1370px;
     }
    
     #left{
@@ -95,7 +95,8 @@ header {
     grid-auto-rows: repeat(3,1fr);
     gap: 1%;
     border-radius: 0.5em;
-   
+    width: 80vw;
+    max-width: 600px;
    
 }
 
