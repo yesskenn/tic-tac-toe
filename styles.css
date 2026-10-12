@@ -59,18 +59,14 @@ header {
     
     
 }
-@media only screen and (min-width: 1400px) {
+@media only screen and (min-width: 1200px) {
     #console {
         display:grid;
-        grid-template-areas: 
-        
-        'left'
-        'right';
-        
+        grid-template-areas: "left right";
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: auto-fit(2,1fr);
         align-items:center;
        width: 1370px;
+       max-height: 66vh;;
     }
    
     #left{
@@ -79,12 +75,9 @@ header {
     #board{
         grid-area:right;
     }
-    #start{
-        width: 100%;
-        position: relative;
-        top:20px;
+  
 
-    }
+    
    
 }
 
@@ -96,7 +89,7 @@ header {
     gap: 1%;
     border-radius: 0.5em;
     width: 80vw;
-    max-width: 600px;
+    max-width: 500px;
    
 }
 
@@ -123,7 +116,7 @@ button {
  .cell{
     display:block;
     margin: 0 auto;
-    font-size: clamp(1em,3vw,5em);
+    font-size: clamp(1em,5vw,5em);
     border: 12px solid rgb(108, 42, 109);
     font-weight: 600;
     max-height: 300px;
@@ -172,6 +165,7 @@ button {
     background-color: #e00898;
     animation-name: banner-text;
     color: white;
+    margin: 1em auto;
 
 }
 
@@ -188,7 +182,7 @@ button {
     50% {
         transform: translateX(0.5em);
 
-        background-color:rgb(237, 17, 17);
+        background-color:rgb(237, 87, 17);
         
     }
 
@@ -206,7 +200,7 @@ button {
 }
 
  #score { 
-    font-size: (2em, 4vw, 4em);
+    font-size: (2em, 3.75vw, 3em);
     color: white;
     font-weight: bold;
     text-align: center;
