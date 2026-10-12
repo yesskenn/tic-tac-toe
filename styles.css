@@ -81,6 +81,10 @@ header {
    
 }
 
+#name-dialog {
+    display:none;
+}
+
 #board{
     
     display: grid;
