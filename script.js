@@ -8,8 +8,15 @@ const playerTurnDiv = document.querySelector('#turn');
 const playerXdiv = document.querySelector("#playerXscore");
 const playerOdiv = document.querySelector("#playerOscore");
 const startBtn = document.querySelector('#start');
-
+const playerXField = document.getElementById("playerNameX").value = "";
+const playerOField = document.getElementById("playerNameO").value = "";
 const restartBtn = document.querySelector("#restartBtn");
+
+
+function enterPlayerName(){
+      document.getElementById("name-dialog").submit();
+
+}
 
 function gameBoard(){
     const board = []
@@ -94,11 +101,13 @@ function gameController(
             {
                 name: playerXname,
                 token: "X",
+                preferredName: playerXField,
              
             },
             {
                 name: playerOname,
                 token: "O",
+                preferredName: playerOField,
             
             },
         ]
@@ -118,7 +127,7 @@ function gameController(
         
         const printNewRound = () => {
             board.printBoard();
-            console.log(`${getActivePlayer().name}'s turn`)
+            console.log(`${getActivePlayer().preferredName}'s turn`)
         };
         const checkWinner = () => {
             const winConditions = [
@@ -152,7 +161,7 @@ function gameController(
             );
                 //if activePlayer has spots in any of the winConditions, declare winner
             if (isMatch){
-                const winner = getActivePlayer().name;
+                const winner = getActivePlayer().preferredName;
                 winnerDiv.textContent = `The winner is ${winner}!`
                 restartBtn.style.setProperty('display','block');
 
