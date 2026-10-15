@@ -8,16 +8,18 @@ const playerTurnDiv = document.querySelector('#turn');
 const playerXdiv = document.querySelector("#playerXscore");
 const playerOdiv = document.querySelector("#playerOscore");
 const startBtn = document.querySelector('#start');
-const playerXField = document.getElementById("playerNameX").value = "";
-const playerOField = document.getElementById("playerNameO").value = "";
+const resetBtn = document.querySelector('#reset');
 const restartBtn = document.querySelector("#restartBtn");
+const nameForm = document.querySelector("#name-dialog");
+const formContainer = document.querySelector("#formContainer");
+const oDigits = document.querySelector("#digitO");
+const xDigits = document.querySelector("#digitX");
 
 
-function enterPlayerName(){
-      document.getElementById("name-dialog").submit();
 
-}
 
+
+        
 function gameBoard(){
     const board = []
     const rows = 3;
@@ -91,31 +93,36 @@ function cell(){
     };
 
 
+
+ 
+
+
 function gameController(
     playerXname = "PlayerX",
     playerOname = "PlayerO",
+   
+
     ){
 
         const board = gameBoard();
+       
+        
         const players = [
             {
                 name: playerXname,
                 token: "X",
-                preferredName: playerXField,
-             
             },
             {
                 name: playerOname,
-                token: "O",
-                preferredName: playerOField,
-            
+                token: "O", 
             },
         ]
 
         let xScore = 0;
         let oScore = 0;
 
-            
+        
+     
   
 
         //take turns between players X and O
@@ -127,7 +134,7 @@ function gameController(
         
         const printNewRound = () => {
             board.printBoard();
-            console.log(`${getActivePlayer().preferredName}'s turn`)
+            console.log(`${getActivePlayer().name}'s turn`)
         };
         const checkWinner = () => {
             const winConditions = [
@@ -161,24 +168,23 @@ function gameController(
             );
                 //if activePlayer has spots in any of the winConditions, declare winner
             if (isMatch){
-                const winner = getActivePlayer().preferredName;
-                winnerDiv.textContent = `The winner is ${winner}!`
-                restartBtn.style.setProperty('display','block');
-
+                const winner = getActivePlayer().name;
+                winnerDiv.textContent = `the winner is ${winner}`;
                
-                if(getActivePlayer().name === playerXname){
+                
+                if(winner === playerXname){
                     xScore++;
-                    playerXdiv.textContent = `X: ${xScore}`;
-                } else if(getActivePlayer().name === playerOname){
-                     oScore++;
-                    playerOdiv.textContent = `O: ${oScore}`;
-                        //playagain?
-                }
-               
-            }
-         
-            }; //game.playTurn(
-           
+                    xDigits.textContent = `${xScore}`;
+                    return xWinner;
+   
+                } else if(winner === playerOname){
+                    oScore++;
+                    oDigits.textContent = `${oScore}`;
+                    return oWinner;
+                    
+                   
+                }}
+            };
             checkWinner();
  
     
@@ -223,22 +229,44 @@ const board = gameBoard();
     - 
     */
 
+nameForm.addEventListener('keydown', function(e){
+    if (e.keyCode == 13){
+       
+ const playerXValue = document.querySelector("#xField").value;
+ const playerOValue = document.querySelector("#oField").value;
+  restartBtn.style.setProperty('display','block');
+  formContainer.style.setProperty('display','none');
+     
+    addGrid(canvas, 3, game.currentSpots);
+    playerTurnDiv.style.setProperty('display','block');
+    playerXdiv.textContent = `${playerXValue}: `;
+    playerOdiv.textContent = `${playerOValue}: `;
+  
+    startBtn.style.setProperty('display', 'none');
+       
 
+
+    }
+});
 
     
 startBtn.addEventListener('click', () => {
+
+    const playerXValue  = document.querySelector("#xField").value;
+const playerOValue =  document.querySelector("#oField").value;
     addGrid(canvas, 3, game.currentSpots);
     playerTurnDiv.style.setProperty('display','block');
-    playerXdiv.textContent = `X: `;
-    playerOdiv.textContent = `O: `;
-  
+    playerXdiv.textContent = `${playerXValue}: `;
+    playerOdiv.textContent = `${playerOValue}: `;
     startBtn.style.setProperty('display', 'none');
       console.log("HELLOOOOSADFJKLSD")
        
     });
                
 
- 
+ resetBtn.addEventListener('click', () => {
+    window.location.reload()
+ })
 
   function addGrid(element, squares, currentSpots){
     element.style.setProperty('background-color', '#313233')
@@ -291,6 +319,12 @@ function screenController(){
     
 
     const announceWinner = () => {
+        const activePlayer = game.getActivePlayer();
+        if (playerXWinner){
+        winnerDiv.textContent =  `winner is ${activePlayer.name}'s `;
+        }else if(playerOWinner){
+            winnerDiv.textContent = `${activePlayer.name} wins`;
+        }
 
     }
 
@@ -336,4 +370,3 @@ function random(number) {
             playerBtn.textContent = `${getActivePlayer().token}`;
         });
         */
-     

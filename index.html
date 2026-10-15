@@ -15,22 +15,16 @@
             <div class="start-buttons">
                 <button class="btn-group" id="start">START</button>
                 <button class="btn-group" id="restartBtn">RESTART</button>
+                <button class="btn-group" id="reset">RESET</button>
 
-                <div id="name-dialog">
-                <form>
-                    <label for="playerNameX">Player X:</label><br>
-                    <input type="text" id="playerNameX" name="playerNameX">
+                <div id="formContainer">
+                <form id="name-dialog">
+                    <label for="xField">Player X:</label>
+                    <input type="text" id="xField" name="xField">
                     <br/>
-                    <label for="playerNameO">Player O:</label><br>
-                    <input type="text" id="playerNameO" name="playerNameO">
-                     <input type="button" onclick="enterPlayerName()" value="Start">
-                    <!--
-                   <p>Choose Your Token</p>
-                    <input type="checkbox" id="tokenX" name="tokenX" value="X"><label for="tokenX">X</label> 
-
-                    <input type="checkbox" id="tokenO" name="tokenO" value="O"><label for="tokenO">O</label> 
-                -->
-                </form>
+                    <label for="oField">Player O:</label>
+                    <input type="text" id="oField" name="oField">
+                    </form>
 
             </div>
 
@@ -52,7 +46,10 @@
                 <div id="turn"></div>
                 <div id="score">
                     <div id="playerXscore"></div>
+                    <div id="digitX"></div>
                     <div id="playerOscore"></div>
+                    <div id="digitO"></div>
+                </div>
                 </div>
         </div>
         </div>
@@ -63,7 +60,7 @@
 
 
 </body>
-<script src="script.js"></script>
+<script src="script.js" defer></script>
 </html>
 <!--
 <script>

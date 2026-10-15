@@ -156,7 +156,8 @@ button {
 }
 
 #restartBtn,
- #start {
+ #start, 
+ #reset {
     border: solid 3px #db277871;
     background: #121212;
     font-size: clamp(1em, 2.5vw, 3em);
